@@ -24,9 +24,19 @@ namespace ConsoleServer1
             Socket sListener = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             Console.WriteLine(sListener.ToString());
-
-
-            Console.ReadLine();
+            // Назначаем сокет локальной конечной точке и слушаем входящие сокеты
+            try
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                Console.ReadLine();
+            }
         }
     }
 }
