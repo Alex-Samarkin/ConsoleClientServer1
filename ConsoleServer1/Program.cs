@@ -35,6 +35,24 @@ namespace ConsoleServer1
                 {
                     Console.WriteLine("Ожидаем соединение через порт {0}", ipEndPoint);
 
+                    #region прием данных клиента
+                    {
+                        // Программа приостанавливается, ожидая входящее соединение
+                        Socket handler = sListener.Accept();
+                        string data = null;
+
+                        // Мы дождались клиента, пытающегося с нами соединиться
+                        byte[] bytes = new byte[1024];
+                        int bytesRec = handler.Receive(bytes);
+
+                        data += Encoding.UTF8.GetString(bytes, 0, bytesRec);
+
+                        // Показываем данные на консоли
+                        Console.Write("Полученный текст: " + data + "\n\n");
+                    }
+                    #endregion
+
+
                 }
 
             }
