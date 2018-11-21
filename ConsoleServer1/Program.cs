@@ -20,6 +20,11 @@ namespace ConsoleServer1
 
             Console.WriteLine(ipEndPoint.ToString());
 
+            // Создаем сокет Tcp/Ip
+            Socket sListener = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+            Console.WriteLine(sListener.ToString());
+
 
             Console.ReadLine();
         }
