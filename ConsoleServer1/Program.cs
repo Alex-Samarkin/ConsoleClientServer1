@@ -27,7 +27,9 @@ namespace ConsoleServer1
             // Назначаем сокет локальной конечной точке и слушаем входящие сокеты
             try
             {
-                
+                sListener.Bind(ipEndPoint);
+                sListener.Listen(10);
+
             }
             catch (Exception ex)
             {
