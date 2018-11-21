@@ -30,6 +30,13 @@ namespace ConsoleServer1
                 sListener.Bind(ipEndPoint);
                 sListener.Listen(10);
 
+                //бесконечный цикл ожидания сообщений
+                while (true)
+                {
+                    Console.WriteLine("Ожидаем соединение через порт {0}", ipEndPoint);
+
+                }
+
             }
             catch (Exception ex)
             {
