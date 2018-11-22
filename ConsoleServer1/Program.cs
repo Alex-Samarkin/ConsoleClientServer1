@@ -49,9 +49,18 @@ namespace ConsoleServer1
 
                         // Показываем данные на консоли
                         Console.Write("Полученный текст: " + data + "\n\n");
-                    }
+                    
                     #endregion
 
+                    #region отправка ответа
+                    
+                        // Отправляем ответ клиенту\
+                        string reply = "Получено " + data.Length.ToString()
+                                                              + " символов";
+                        byte[] msg = Encoding.UTF8.GetBytes(reply);
+                        handler.Send(msg);
+                    }
+                    #endregion
 
                 }
 
