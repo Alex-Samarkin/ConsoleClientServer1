@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿// SocketServer.cs
+using System;
 using System.Text;
-using System.Threading.Tasks;
-// подключение сокетов
+using System.Net;
 using System.Net.Sockets;
 
-namespace ConsoleServer1
+namespace SocketServer
 {
     class Program
     {
@@ -18,31 +15,26 @@ namespace ConsoleServer1
             IPAddress ipAddr = ipHost.AddressList[0];
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 11000);
 
-            Console.WriteLine(ipEndPoint.ToString());
-
             // Создаем сокет Tcp/Ip
             Socket sListener = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
-            Console.WriteLine(sListener.ToString());
             // Назначаем сокет локальной конечной точке и слушаем входящие сокеты
             try
             {
                 sListener.Bind(ipEndPoint);
                 sListener.Listen(10);
 
-                //бесконечный цикл ожидания сообщений
+                // Начинаем слушать соединения
                 while (true)
                 {
                     Console.WriteLine("Ожидаем соединение через порт {0}", ipEndPoint);
-
-                    #region прием данных клиента
-
 
                     // Программа приостанавливается, ожидая входящее соединение
                     Socket handler = sListener.Accept();
                     string data = null;
 
                     // Мы дождались клиента, пытающегося с нами соединиться
+
                     byte[] bytes = new byte[1024];
                     int bytesRec = handler.Receive(bytes);
 
@@ -51,18 +43,12 @@ namespace ConsoleServer1
                     // Показываем данные на консоли
                     Console.Write("Полученный текст: " + data + "\n\n");
 
-                    #endregion
-
-                    #region отправка ответа
-
-                    // Отправляем ответ клиенту
-                    string reply = "Получено " + data.Length.ToString()+" символов";
+                    // Отправляем ответ клиенту\
+                    string reply = "Спасибо за запрос в " + data.Length.ToString()
+                            + " символов";
                     byte[] msg = Encoding.UTF8.GetBytes(reply);
                     handler.Send(msg);
 
-                    #endregion
-
-                    #region разрыв соединения
                     if (data.IndexOf("<TheEnd>") > -1)
                     {
                         Console.WriteLine("Сервер завершил соединение с клиентом.");
@@ -71,13 +57,7 @@ namespace ConsoleServer1
 
                     handler.Shutdown(SocketShutdown.Both);
                     handler.Close();
-
-
-                    #endregion
-
-
                 }
-
             }
             catch (Exception ex)
             {
